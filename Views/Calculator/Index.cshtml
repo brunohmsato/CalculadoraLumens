@@ -1,0 +1,29 @@
+﻿@model RoomModel
+
+<h2>Calculadora de Lumens</h2>
+
+<form asp-controller="Calculadora" asp-action="CalcularLumens" method="post">
+    <div>
+        <label for="Largura">Largura:</label>
+        <input asp-for="Largura" class="form-control" />
+        <span asp-validation-for="Largura" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label for="Comprimento">Comprimento:</label>
+        <input asp-for="Comprimento" class="form-control" />
+        <span asp-validation-for="Comprimento" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label for="TipoComodo">Tipo de Cômodo:</label>
+        <select asp-for="TipoComodo" class="form-control">
+            <option value="Quarto">Quarto</option>
+            <option value="Cozinha">Cozinha</option>
+            <!-- Adicione outras opções conforme necessário -->
+        </select>
+        <span asp-validation-for="TipoComodo" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Calcular</button>
+</form>

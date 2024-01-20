@@ -1,0 +1,8 @@
+﻿@model ResultadoViewModel
+
+<h2>Resultado</h2>
+
+<p>Lumens Ideais: @Model.Lumens</p>
+<p>Temperatura de Cor: @Model.TemperaturaCor</p>
+
+<a asp-controller="Calculadora" asp-action="Index" class="btn btn-primary">Nova Consulta</a>
