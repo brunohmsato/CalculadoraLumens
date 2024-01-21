@@ -1,9 +1,8 @@
 {
-  "version": 2,
-  "builds": [
+  "routes": [
     {
-      "src": "Views/Home",
-      "use": "@now/static"
+      "src": "/(.*)",
+      "dest": "/Views/Home/$1"
     }
   ]
 }
