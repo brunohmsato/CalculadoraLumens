@@ -1,7 +1,9 @@
 {
-  "rewrites": [
+  "routes": [
+    { "handle": "filesystem" },
     {
-      "source": "/(.*)", "destination": "/"
+      "src": "/Views/Home/.*",
+      "dest": "/Views/Home/index.cshtml"
     }
   ]
 }
