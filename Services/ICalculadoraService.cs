@@ -1,6 +1,6 @@
 ﻿using CalculadoraLumens.Models;
 
-namespace CalculadoraLumens.IServices
+namespace CalculadoraLumens.Services
 {
     public interface ICalculadoraService
     {

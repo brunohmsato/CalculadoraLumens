@@ -1,5 +1,4 @@
-﻿using CalculadoraLumens.IServices;
-using CalculadoraLumens.Models;
+﻿using CalculadoraLumens.Models;
 
 namespace CalculadoraLumens.Services
 {
@@ -7,46 +6,79 @@ namespace CalculadoraLumens.Services
     {
         public ResultadoViewModel CalcularLumens(RoomModel comodo)
         {
-            double valorLumens = CalcularValorLumensPorComodo(comodo.TipoComodo);
-            double resultado = valorLumens * comodo.Largura * comodo.Comprimento;
+            var (MinLumens, MaxLumens) = CalcularValorLumens(comodo.TipoComodo);
+            var (MinTemp, MaxTemp) = CalcularValorTemperatura(comodo.TipoComodo);
 
             ResultadoViewModel resultadoViewModel = new()
             {
-                Lumens = (int)resultado,
-                TemperaturaCor = "2700K" // Exemplo, você precisa definir como calcular a temperatura de cor
+                LumensMin = (int)(MinLumens * comodo.Largura * comodo.Comprimento),
+                LumensMax = (int)(MaxLumens * comodo.Largura * comodo.Comprimento),
+                TemperaturaMin = MinTemp,
+                TemperaturaMax = MaxTemp,
+                TomDaCor = DefinirTom(MinTemp, MaxTemp)
             };
 
             return resultadoViewModel;
         }
 
-        private static (bool UsaIntervalo, double Min, double Max) ObterConfiguracaoLumens(string tipoComodo)
+        private static (double Min, double Max) CalcularValorLumens(string tipoComodo)
+        {
+            var (Intervalo, Min, Max) = ObterConfiguracaoLumens(tipoComodo);
+
+            return Intervalo ? (Min, Max) : (Min, Min);
+        }
+
+        private static (bool Intervalo, double Min, double Max) ObterConfiguracaoLumens(string tipoComodo)
         {
             return tipoComodo.ToLower() switch
             {
-                "quarto" => (UsaIntervalo: true, Min: 20, Max: 50),
-                "cozinha" => (UsaIntervalo: true, Min: 40, Max: 70),
-                "banheiro" => (UsaIntervalo: false, Min: 30, Max: 0),// Exemplo: Banheiro usa um valor fixo de 30
-                                                                     // Adicione outros casos conforme necessário
-                _ => ((bool UsaIntervalo, double Min, double Max))(UsaIntervalo: false, Min: 0, Max: 0),// Valor padrão se o tipo de cômodo não for reconhecido
+                "sala de estar" => (Intervalo: true, Min: 50, Max: 100),
+                "cozinha" => (Intervalo: true, Min: 300, Max: 500),
+                "corredor" => (Intervalo: false, Min: 150, Max: 0),
+                "quarto" => (Intervalo: false, Min: 50, Max: 0),
+                "banheiro" => (Intervalo: false, Min: 100, Max: 0),
+                "lavanderia" => (Intervalo: false, Min: 50, Max: 0),
+                "garagem" => (Intervalo: false, Min: 50, Max: 0),
+                "corredor externo" => (Intervalo: true, Min: 50, Max: 150),
+                _ => (Intervalo: false, Min: 0, Max: 0),
             };
         }
 
-        private static double CalcularValorLumensPorComodo(string tipoComodo)
+        private static (int Min, int Max) CalcularValorTemperatura(string tipoComodo)
         {
-            var (UsaIntervalo, Min, Max) = ObterConfiguracaoLumens(tipoComodo);
+            return ObterConfiguracaoTemperatura(tipoComodo);
+        }
 
-            if (UsaIntervalo)
+        private static (int Min, int Max) ObterConfiguracaoTemperatura(string tipoComodo)
+        {
+            return tipoComodo.ToLower() switch
             {
-                // Lógica para calcular o valor dentro do intervalo
-                double valorCalculado = (Min + Max) / 2;
-                return valorCalculado;
+                "sala de estar" => (Min: 2700, Max: 3000),
+                "cozinha" => (Min: 3500, Max: 4500),
+                "corredor" => (Min: 3500, Max: 4500),
+                "quarto" => (Min: 2700, Max: 3000),
+                "banheiro" => (Min: 3500, Max: 4500),
+                "lavanderia" => (Min: 3500, Max: 4500),
+                "garagem" => (Min: 5000, Max: 6500),
+                "corredor externo" => (Min: 5000, Max: 6500),
+                _ => (Min: 0, Max: 0),
+            };
+        }
+
+        private static string DefinirTom(int temperaturaMin, int temperaturaMax)
+        {
+            if (temperaturaMin >= 2600 && temperaturaMax <= 3500)
+            {
+                return "Quente";
+            }
+            else if (temperaturaMin >= 4000 && temperaturaMax <= 5500)
+            {
+                return "Neutro";
             }
             else
             {
-                // Valor fixo para cômodos que não utilizam um intervalo
-                return Min;
+                return "Frio";
             }
         }
-
     }
 }
