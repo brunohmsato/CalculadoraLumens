@@ -1,9 +1,9 @@
 {
-  "routes": [
-    { "handle": "filesystem" },
+  "version": 2,
+  "builds": [
     {
-      "src": "/Views/Home/.*",
-      "dest": "/Views/Home/index.cshtml"
+      "src": "Views/Home",
+      "use": "@now/static"
     }
   ]
 }
