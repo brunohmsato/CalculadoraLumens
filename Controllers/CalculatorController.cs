@@ -1,6 +1,7 @@
-﻿using CalculadoraLumens.IServices;
-using CalculadoraLumens.Models;
+﻿using CalculadoraLumens.Models;
+using CalculadoraLumens.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace CalculadoraLumens.Controllers
 {
@@ -13,20 +14,21 @@ namespace CalculadoraLumens.Controllers
         [HttpPost]
         public IActionResult CalcularLumens(RoomModel comodo)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                try
                 {
-                    ResultadoViewModel resultadoViewModel = _calculadoraService.CalcularLumens(comodo);
 
-                    return View("Resultado", resultadoViewModel);
+                ResultadoViewModel resultadoViewModel = _calculadoraService.CalcularLumens(comodo);
+                return View("Resultado", resultadoViewModel);
+
                 }
-                return View("Index", comodo);
+                catch
+                {
+                    return RedirectToAction("Privacy", "Home");
+                }
             }
-            catch (Exception)
-            {
-                return RedirectToAction("Erro", "Home");
-            }
+            return RedirectToAction("Privacy", "Home");
         }
     }
 }
