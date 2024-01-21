@@ -2,7 +2,11 @@
 {
     public class ResultadoViewModel
     {
-        public int Lumens { get; set; }
-        public string TemperaturaCor { get; set; }
+        public int LumensMin { get; set; }
+        public int LumensMax { get; set; }
+        public int TemperaturaMin { get; set; }
+        public int TemperaturaMax { get; set; }
+        public string TomDaCor { get; set; }
     }
+
 }
