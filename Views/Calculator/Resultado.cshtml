@@ -2,7 +2,8 @@
 
 <h2>Resultado</h2>
 
-<p>Lumens Ideais: @Model.Lumens</p>
-<p>Temperatura de Cor: @Model.TemperaturaCor</p>
+<p>Lumens Ideais: entre @Model.LumensMin<span>lm</span> e @Model.LumensMax<span>lm</span></p>
+<p>Temperatura de Cor: entre @Model.TemperaturaMin<span>K</span> e @Model.TemperaturaMax<span>K</span></p>
+<p>Tom da Cor: O tom da cor para o ambiente é "@Model.TomDaCor"</p>
 
-<a asp-controller="Calculadora" asp-action="Index" class="btn btn-primary">Nova Consulta</a>
+<a asp-controller="Calculator" asp-action="Index" class="btn btn-primary">Nova Consulta</a>

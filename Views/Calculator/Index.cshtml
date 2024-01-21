@@ -2,7 +2,7 @@
 
 <h2>Calculadora de Lumens</h2>
 
-<form asp-controller="Calculadora" asp-action="CalcularLumens" method="post">
+<form asp-controller="Calculator" asp-action="CalcularLumens" method="post">
     <div>
         <label for="Largura">Largura:</label>
         <input asp-for="Largura" class="form-control" />
@@ -18,9 +18,14 @@
     <div>
         <label for="TipoComodo">Tipo de Cômodo:</label>
         <select asp-for="TipoComodo" class="form-control">
-            <option value="Quarto">Quarto</option>
+            <option value="Sala de Estar">Sala de Estar</option>
             <option value="Cozinha">Cozinha</option>
-            <!-- Adicione outras opções conforme necessário -->
+            <option value="Corredor">Corredor</option>
+            <option value="Quarto">Quarto</option>
+            <option value="Banheiro">Banheiro</option>
+            <option value="Lavanderia">Lavanderia</option>
+            <option value="Garagem">Garagem</option>
+            <option value="Corredor Externo">Corredor Externo</option>
         </select>
         <span asp-validation-for="TipoComodo" class="text-danger"></span>
     </div>
